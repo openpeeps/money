@@ -27,5 +27,5 @@ Use `bigints` instead
 - 🥰 [Donate via PayPal address](https://www.paypal.com/donate/?hosted_button_id=RJK3ZTDWPL55C)
 
 ### 🎩 License
-{PKG} | MIT license. [Made by Humans from OpenPeeps](https://github.com/openpeeps) for Supranim<br>
+Money | MIT license. [Made by Humans from OpenPeeps](https://github.com/openpeeps) for Supranim<br>
 Copyright &copy; 2023 Supranim | OpenPeeps & Contributors &mdash; All rights reserved.
