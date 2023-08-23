@@ -49,7 +49,7 @@ test "currencies":
   assert amount(199, CZK) != amount(100, EUR)
 
 test "amount min":
-  assert min(50.EUR, 55.EUR, 120.EUR, 5.EUR, 5.02.EUR) == 5.02.EUR
+  assert min(50.EUR, 55.EUR, 120.EUR, 5.EUR, 5.02.EUR) == 5.EUR
 
 test "amount max":
   assert max(50.EUR, 55.EUR, 120.EUR, 5.EUR, 120.50.EUR) == 120.50.EUR

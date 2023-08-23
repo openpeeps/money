@@ -352,7 +352,7 @@ proc `.`*[A: int64, C: Alpha3](unit: A, currency: C): Money =
   result = amount(unit, currency)
 
 proc `.`*[A: float64, C: Alpha3](fAmount: A, currency: C): Money =
-  var a = split($fAmount, ".")
+  var a = split($fAmount, ".") # todo avoid string conversion
   var subunits =
     if a[1].len == 1:
       parseInt(a[1] & "0")
@@ -486,7 +486,7 @@ proc min*[M: Money](x: varargs[M]): M =
   ## Returns the smallest of the given `Money` objects
   result = x[0]
   for i in 1..high(x):
-    if x[i].units <= result.units and x[i].subunits > result.subunits:
+    if x[i].units <= result.units and x[i].subunits <= result.subunits:
       result = x[i]
 
 proc avg*[M: Money](x: varargs[M]): M =
