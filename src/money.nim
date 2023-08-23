@@ -182,7 +182,7 @@ type
     negative, rtl: bool
 
 const
-  Currencies*: array[161, Currency] = [
+  Currencies*: array[155, Currency] = [
     ("ALGERIAN DINAR", DZD, 2),
     ("ANGOLA KWANZA", AOA, 2),
     ("ARGENTINE PESO", ARS, 2),
@@ -502,7 +502,7 @@ proc contains*(x: Money, currency: Alpha3): bool =
 proc coupon*[M: Money](amount: var M, discount: M)  =
   discard # todo
 
-proc coupon*(amount: var M, discount: float) =
+proc coupon*(amount: var Money, discount: float) =
   discard # todo
 
 proc `$`*(symbol: Alpha3): string =
