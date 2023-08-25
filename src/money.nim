@@ -1,4 +1,7 @@
 # Create, calculate and format money in Nim language.
+# 
+# This package has no dependencies other than `pkg/bigints`
+# and standard libraries.
 #
 # (c) 2023 Supranim | MIT License
 #          Made by Humans from OpenPeeps
@@ -7,7 +10,10 @@
 {.experimental: "dotOperators".}
 
 import bigints
-import std/[math, macros, strutils, enumutils, typetraits]
+import std/[math, macros, sequtils, strutils, options,
+        enumutils, tables, typetraits]
+
+export bigints
 
 type
   Alpha3* {.pure.} = enum
@@ -163,23 +169,20 @@ type
     USD = "840"
     UZS = "860"
     VUV = "548"
-    DEF = "989"
-    GHI = "990"
-    LMN = "992"
-    IJK = "991"
-    XXX = "987"
-    ABC = "988"
     YER = "886"
     CNY = "156"
     ZMW = "967"
+    noCurrency
 
   Currency* = tuple[name: string, alpha3: Alpha3, expo: int]
-  Money = object
-    units: int64
-    subunits: range[0..999]
+
+  Money* = object
     currency: Currency
-    decimals: uint8
+    units: BigInt
     negative, rtl: bool
+
+  MoneyFormattingError* = object of CatchableError
+  MoneyError* = object of CatchableError
 
 const
   Currencies*: array[155, Currency] = [
@@ -340,135 +343,204 @@ const
     ("ZAMBIAN KWACHA", ZMW, 2)
   ]
 
-proc amount*(units: int64, subunits: range[0..999] = 0, currency: Alpha3): Money =
-  ## Create a new amount of `Money`
-  result = Money(units: units, subunits: subunits, currency: Currencies[symbolRank(currency)])
+  # compile-time flag to manage a default currency
+  # pass `-d:defaultCurrency:{int}` to change the default currency
+  # Default: `49` = EURO
+  defaultCurrency {.intdefine.}: int = 49
 
-proc amount*(units: int64, currency: Alpha3): Money =
+proc amount*(units: int, currency: Alpha3): Money =
   ## Create a new amount of `Money`
-  result = Money(units: units, subunits: 0, currency: Currencies[symbolRank(currency)])
+  result = Money(units: initBigInt(units), currency: Currencies[symbolRank(currency)])
 
-proc `.`*[A: int64, C: Alpha3](unit: A, currency: C): Money = 
+proc `.`*[A: int, C: Alpha3](unit: A, currency: C): Money = 
   result = amount(unit, currency)
 
-proc `.`*[A: float64, C: Alpha3](fAmount: A, currency: C): Money =
-  var a = split($fAmount, ".") # todo avoid string conversion
-  var subunits =
-    if a[1].len == 1:
-      parseInt(a[1] & "0")
-    elif a[1].len == 2:
-      parseInt(a[1])
-    else:
-      parseInt a[1][0..1] 
-  result = amount(a[0].parseInt(), subunits, currency)
-  result.negative = a[0][0] == '-'
+template sameCurrency(operation): untyped =
+  if x.currency[1] == y.currency[1]:
+    operation
 
 proc getCurrency*(amount: Money): Currency =
   result = amount.currency
 
-# Math
+proc formatMoney*(amount: string, currency: Alpha3): Money =
+  ## Format `amount` string to `Money`
+  result = Money()
+  if likely(currency != noCurrency):
+    result.currency = Currencies[symbolRank(currency)]
+  else:
+    result.currency = Currencies[defaultCurrency]
+  var
+    i = 0
+    isInvalid, isNeg: bool
+    amount = amount
+  if amount[0] == '-':
+    isNeg = true
+    amount = amount[1..^1]
+  while i < amount.high:
+    case amount[i]
+      of '.': discard
+      of Digits: discard
+      else: isInvalid = true; break
+    inc i
+  if isInvalid:
+    raise newException(MoneyFormattingError,
+      "Invalid amount: " & amount)
+  let pos = amount.high - 1
+  result.negative = isNeg
+  result.units =
+    if not isNeg: initBigInt(amount)
+    else: initBigInt("-" & amount)
 
-proc `+`*[M: Money](x: var M, y: M): M =
-  x.units = x.units + y.units
-  result = x
+proc fmt*(amount: string, currency: Alpha3 = Alpha3(defaultCurrency)): Money {.inline.} =
+  ## An alias of `formatMoney` with `currency` set as defaultCurrency 
+  formatMoney(amount, currency)
+
+proc newMoney*(amount: string = "0", currency: Alpha3 = Alpha3(defaultCurrency)): Money =
+  ## Creates `Money` from `amount` string. This is similar with `formatMoney` 
+  formatMoney(amount, currency)
+
+proc newMoney*(amount: BigInt, currency: Currency = Currencies[defaultCurrency]): Money =
+  ## Creates `Money` from `amount` BigInt
+  Money(units: amount, currency: currency)
+
+proc newMoney*(amount: int, currency: Currency = Currencies[defaultCurrency]): Money {.inline.} =
+  ## Creates `Money` from `amount` int
+  newMoney(initBigInt(amount), currency)
+
+#
+# Math
+#
+proc isNegative*(x: Money): bool =
+  ## Checks if `x` Money is negative
+  x.negative or x.units < initBigInt(0)
+
+proc isZero*(x: Money): bool =
+  ## Checks if `x` Money is `0.00`
+  x.units == initBigInt("0")
+
+proc isCent*(x: Money): bool =
+  ## Checks if `x` Money is <= `0.99`
+  x.units <= initBigInt("99")
 
 proc `+`*[M: Money](x, y: M): M =
-  result = Money()
-  result.subunits = x.subunits + y.subunits
-  result.currency = x.currency
+  ## Addition of `x` and `y` Money. Returns the total as `Money`
+  result = x
   result.units = x.units + y.units
-  if result.subunits == 100:
-    result.subunits = 00
-    inc result.units
-  elif result.subunits > 100:
-    result.subunits = result.subunits - 100
-    inc result.units
 
-proc `-`*[M: Money](x: var M, y: M): M =
-  x.units = x.units - y.units
-  result = x
-
-proc `-`*[M: Money](x: ref M, y: M): M =
-  x.units = x.units - y.units
-  result = x
+proc `+=`*[M: Money](x: var M, y: M) =
+  ## Addition of mutable `x` and `y` Money. Returns the total as `Money`
+  x.units += y.units
+  if x.units >= initBigInt(0):
+    x.negative = false
 
 proc `-`*[M: Money](x, y: M): M =
-  result = Money()
-  var decUnit: bool
-  result.subunits =
-    if x.subunits >= y.subunits:
-      x.subunits - y.subunits
-    else:
-      decUnit = true
-      100 - abs(x.subunits - y.subunits)
-  result.currency = x.currency
+  ## Subtract of `x` based on `y`. Returns the total as new `Money`
+  result = x
+  if x.units < y.units:
+    result.negative = true
   result.units = x.units - y.units
-  if decUnit: dec result.units
-  if result.subunits == 100:
-    result.subunits = 00
-    dec result.units
-  elif result.subunits > 100:
-    result.subunits = result.subunits - 100
-    dec result.units
 
-proc `*`*[M: Money](x: var M, multiplier: int) =
-  x.units = x.units * multiplier 
-  x.subunits = x.subunits * multiplier
-  if x.subunits == 100:
-    x.subunits = 00
-    inc x.units
+proc `-=`*[M: Money](x: var M, y: M) =
+  ## Performs subtraction on the two operands and assigns
+  ## the result to the mutable `x`.
+  if x.units < y.units:
+    x.negative = true
+  x.units -= y.units
 
-proc add*[M: Money](x: var M, ys: varargs[M]) =
-  for y in ys:
-    discard x + y
+proc `*=`*[M: Money](x: var M, y: int) =
+  ## Multiplies `x` with `y`, and assing the result
+  x.units = x.units * y
 
-proc subtract*[M: Money](x: var M, ys: varargs[M]) =
-  for y in ys:
-    discard x - y
+proc `*=`*[M: Money](x: var M, y: M) =
+  ## Multiplies `x` with `y` and assing the result
+  sameCurrency:
+    x.units = x.units * y.units
 
-proc multiply*[M: Money](x: var M, multiplier: int) =
-  x * multiplier
+proc `*`*[M: Money](x: M, y: int): M =
+  ## Multiplies `x` by `y`
+  sameCurrency:
+    result = x
+    result.units = x.units * initBigInt(y)
 
+proc `*`*[M: Money](x: M, y: M): M =
+  # Multiply `x` by `y`
+  sameCurrency:
+    result = x
+    result.units = x.units * y.units
+
+proc `/`*[M: Money](x: M, y: M): M =
+  sameCurrency:
+    result = x
+    result.units = x.units div y.units
+
+proc `/=`*[M: Money](x: var M, y: M): M =
+  sameCurrency:
+    x.units = x.units div y.units
+
+proc `/=`*[M: Money](x: var M, y: int) =
+  x.units = x.units div initBigInt(y)
+
+proc add*[M: Money](x: var M, y: varargs[M]) =
+  for z in y:
+    x += z
+
+proc sub*[M: Money](x: var M, y: varargs[M]) =
+  for z in y:
+    x -= z
+
+proc multi*[M: Money](x: var M, y: varargs[int]) =
+  for z in y:
+    x *= z
+
+proc `div`*[M: Money](x: var M, y: varargs[M]) =
+  for z in y:
+    x /= z
+
+proc `div`*(x: var Money, y: varargs[int]) =
+  for z in y:
+    x /= z
+
+proc `div`*[M: Money](x: M, y: int): M =
+  result = x
+  result.units = result.units div initBigInt(y)
+
+#
 # Comparison
+#
 proc `>`*[M: Money](x, y: M): bool =
-  if x.units > y.units:
-    return true
-  result = x.subunits > y.subunits
+  sameCurrency:
+    x.units > y.units
 
 proc `<`*[M: Money](x, y: M): bool =
-  if x.units < y.units:
-    return true
-  result = x.subunits < y.subunits
+  sameCurrency:
+    x.units < y.units
 
 proc `<=`*[M: Money](x, y: M): bool =
-  if x.currency[1] == y.currency[1]:
-    echo x.negative
-    echo x.units < y.units
-    echo x.units
-    echo y.units
-    result = x.units <= y.units
+  sameCurrency:
+    x.units <= y.units
 
 proc `>=`*[M: Money](x, y: M): bool =
-  if x.currency[1] == y.currency[1]:
-    if x.units == y.units:
-      return x.subunits >= y.subunits
-    result = x.units > y.units
+  sameCurrency:
+    x.units >= y.units
 
 proc `==`*[M: Money](x, y: M): bool =
-  if x.currency[1] == y.currency[1]:
-    if x.units == y.units:
-      result = x.subunits == y.subunits
+  sameCurrency:
+    x.units == y.units
 
 proc `!=`*[M: Money](x, y: M): bool =
-  if x.currency[1] == y.currency[1]:
-    if x.units != y.units:
-      return true
-    result = x.subunits != y.subunits
-  else: result = true
+  sameCurrency:
+    x.units != y.units
 
-proc `%`*[M: Money](x: var M, y: M): M =
-  x.units = x.units div y.units
+proc `%`*(perc: float, x: Money): Money =
+  ## Apply a discount to `x` Money
+  var part = (perc / 100) * toInt[int](x.units).get.toFloat
   result = x
+  result.units -= initBigInt(int(part))
+
+proc `%`*(perc: float, x: var Money) =
+  ## Apply a `perc` discount to `x` Money
+  var part = (perc / 100) * toInt[int](x.units).get.toFloat
+  x.units -= initBigInt(int(part))
 
 proc abs*[M: Money](x: M): M =
   result = Money()
@@ -490,30 +562,90 @@ proc min*[M: Money](x: varargs[M]): M =
       result = x[i]
 
 proc avg*[M: Money](x: varargs[M]): M =
+  ## Returns the average
   result = x[0]
   for i in 1..high(x):
     if x[i].units <= result.units:
       result = x[i]
 
+#
+# Boolean Utils
+#
 proc contains*(x: Money, currency: Alpha3): bool =
   ## Determine if currency type of `x` Money is `currency`
   result = x.currency[1] == currency
 
-proc coupon*[M: Money](amount: var M, discount: M)  =
-  discard # todo
+proc isCurrency*(x: Money, currency: Alpha3): bool =
+  ## An alias of `contains`
+  contains(x, currency)
+
+#
+# Cart Utilities
+#
+proc allocate*(x: var Money, ratios: openarray[SomeNumber]): seq[Money] =
+  ## Applies succesive ratios to `x` Money
+  let
+    amount = x.units
+    zero = initBigInt(0)
+  if sum(ratios) > 0:
+    for ratio in ratios:
+      if ratio >= 0:
+        if not x.isZero:
+          var
+            fraction = (ratio / 100) * toInt[int](amount).get.toFloat
+            share = initBigInt(int(round(fraction)))
+            rest = x.units - share
+          add result, Money(units: share, currency: x.currency)
+          if not rest < zero:
+            x.units = rest
+          else: break
+        else: break
+      else:
+        raise newException(MoneyError,
+          "Cannot allocate. Ratio must be zero or positive")
+  else:
+    raise newException(MoneyError,
+      "Cannot allocate. Sum of ratios must be greater than zero")
+
+proc allocate*[M: Money](x: var M, targets: int): seq[M] =
+  ## An alias of `div` proc that allocates `x` Money to N targets
+  for i in 1..targets:
+    add result, x div targets
+  for i in 0..(targets - 1):
+    x -= result[i]
+  var i = 0
+  while not x.isZero:
+    dec x.units
+    inc result[i].units
+    inc i
+  echo x
+
+proc coupon*[M: Money](amount: var M, discount: M) =
+  ## Applies `discount` to `amount`
+  discard
 
 proc coupon*(amount: var Money, discount: float) =
+  ## Applies `discount` to `amount`
   discard # todo
 
 proc `$`*(symbol: Alpha3): string =
-  ## Returns the `symbol` name 
+  ## Returns the `symbol` name
   result = symbolName(symbol)
 
 proc `$`*[M: Money](m: M | ref M): string =
   ## Return string representation of `Money`
+  if m.negative:
+    add result, "-"
   add result, $m.currency[1] & spaces(1)
-  add result, $m.units & "."
-  if m.subunits == 00 or m.subunits == 000:
-    add result, repeat($m.subunits, m.currency[2])
+  let str = $(abs(m.units))
+  let len = str.len
+  var units, subunits: string
+  if len > 2:
+    units = str[0..^3]
+    subunits = str[str.high - 1 .. ^1]
+    add result, units & "."
+    add result, subunits
+  elif len == 2:
+    add result, "0." & str
   else:
-    add result, $m.subunits
+    add result, "0.0" & str
