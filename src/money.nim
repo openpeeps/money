@@ -616,7 +616,6 @@ proc allocate*[M: Money](x: var M, targets: int): seq[M] =
     dec x.units
     inc result[i].units
     inc i
-  echo x
 
 proc coupon*[M: Money](amount: var M, discount: M) =
   ## Applies `discount` to `amount`
