@@ -159,7 +159,6 @@ type
     WST = "882"
     TZS = "834"
     KZT = "398"
-    ZZZ = "099"
     TTD = "780"
     MNT = "496"
     TND = "788"
@@ -185,7 +184,7 @@ type
   MoneyError* = object of CatchableError
 
 const
-  Currencies*: array[155, Currency] = [
+  Currencies*: array[154, Currency] = [
     ("ALGERIAN DINAR", DZD, 2),
     ("ANGOLA KWANZA", AOA, 2),
     ("ARGENTINE PESO", ARS, 2),
@@ -328,7 +327,6 @@ const
     ("TALA", WST, 2),
     ("TANZANIAN SHILLING", TZS, 2),
     ("TENGE", KZT, 2),
-    ("TEST ZZZ DOLLAR", ZZZ, 4),
     ("TRIN. & TOB. DOLLAR", TTD, 2),
     ("TUGRIK", MNT, 2),
     ("TUNISIAN DINAR", TND, 3),
