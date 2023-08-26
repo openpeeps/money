@@ -14,7 +14,6 @@
 Nim library to make working with money safer, easier and fun!
 > If I had a dime for every time I've seen someone use FLOAT to store currency, I'd have $999.997634 -- Bill Karwin
 
-This library is inspired from [moneyphp/money](https://github.com/moneyphp/money).
 
 ## 😍 Key Features
 - Framework agnostic
@@ -49,22 +48,37 @@ assert x == 300.EUR   # EUR 3.00
 assert x + y > y      # EUR 3.00 > EUR 1.50  
 ```
 
+```nim
+var x = fmt("100")
+assert $(x - fmt(50)) == "EUR 0.50"
+```
+
 ### Comparisons
 Comparing `x` to `y` is easy!
 
 ```nim
-var x = newMoney("100") # EUR 1.00
-var y = newMoney("150") # EUR 1.50
+var
+  x = 100.EUR
+  y = 150.EUR
 
-assert x <= y
-assert fmt("2500") <= fmt("2590") # 25.00 <= 25.90
+assert x == 100.EUR
+assert x < y
+assert x >= 99.EUR
+assert x != 100.USD
+assert y > x
+assert y >= 149.EUR
 ```
+
+### Cart Example
+[Dummy cart example available in `/tests`](https://github.com/supranim/money/blob/main/tests/test1.nim)
 
 ### ❤ Contributions & Support
 - 🐛 Found a bug? [Create a new Issue](https://github.com/supranim/money/issues)
 - 👋 Wanna help? [Fork it!](https://github.com/supranim/money/fork)
 - 😎 [Get €20 in cloud credits from Hetzner](https://hetzner.cloud/?ref=Hm0mYGM9NxZ4)
 - 🥰 [Donate via PayPal address](https://www.paypal.com/donate/?hosted_button_id=RJK3ZTDWPL55C)
+
+This library is inspired from [moneyphp/money](https://github.com/moneyphp/money).
 
 ### 🎩 License
 Money | MIT license. [Made by Humans from OpenPeeps](https://github.com/openpeeps) for Supranim<br>
