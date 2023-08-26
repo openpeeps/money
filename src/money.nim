@@ -531,7 +531,7 @@ proc `<=`*[M: Money](x, y: M): bool =
 
 proc `>=`*[M: Money](x, y: M): bool =
   sameCurrency:
-    x.units >= y.units
+    return x.units >= y.units
 
 proc `==`*[M: Money](x, y: M): bool =
   sameCurrency:
