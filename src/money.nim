@@ -353,7 +353,7 @@ proc amount*(units: int, currency: Alpha3): Money =
 proc `.`*[A: int, C: Alpha3](unit: A, currency: C): Money = 
   result = amount(unit, currency)
 
-template sameCurrency(operation): untyped =
+template sameCurrency(operation): untyped {.dirty.} =
   if x.currency[1] == y.currency[1]:
     operation
 
@@ -389,21 +389,33 @@ proc formatMoney*(amount: string, currency: Alpha3): Money =
     if not isNeg: initBigInt(amount)
     else: initBigInt("-" & amount)
 
-proc fmt*(amount: string, currency: Alpha3 = Alpha3(defaultCurrency)): Money {.inline.} =
+proc fmt*(x: string, currency: Alpha3 = Alpha3(defaultCurrency)): Money {.inline.} =
   ## An alias of `formatMoney` with `currency` set as defaultCurrency 
-  formatMoney(amount, currency)
+  formatMoney(x, currency)
 
-proc newMoney*(amount: string = "0", currency: Alpha3 = Alpha3(defaultCurrency)): Money =
-  ## Creates `Money` from `amount` string. This is similar with `formatMoney` 
-  formatMoney(amount, currency)
+proc `$$`*(x: string, currency: Alpha3 = Alpha3(defaultCurrency)): Money {.inline.} =
+  ## An alias of `formatMoney` using `currency` set as `defaultCurrency`
+  formatMoney(x, currency)
 
-proc newMoney*(amount: BigInt, currency: Currency = Currencies[defaultCurrency]): Money =
-  ## Creates `Money` from `amount` BigInt
-  Money(units: amount, currency: currency)
+proc `$$`*(x: int): Money =
+  ## Creates `Money` from `x` int
+  Money(units: initBigInt(x), currency: Currencies[defaultCurrency])
 
-proc newMoney*(amount: int, currency: Currency = Currencies[defaultCurrency]): Money {.inline.} =
-  ## Creates `Money` from `amount` int
-  newMoney(initBigInt(amount), currency)
+proc newMoney*(x: string = "0", currency: Alpha3 = Alpha3(defaultCurrency)): Money =
+  ## Creates `Money` from `x` string. This is similar with `formatMoney` 
+  formatMoney(x, currency)
+
+proc newMoney*(x: BigInt, currency: Currency = Currencies[defaultCurrency]): Money =
+  ## Creates `Money` from `x` BigInt
+  Money(units: x, currency: currency)
+
+proc newMoney*(x: int, currency: Currency = Currencies[defaultCurrency]): Money {.inline.} =
+  ## Creates `Money` from `x` int
+  newMoney(initBigInt(x), currency)
+
+proc coins*(rep: uint = 1): int = 1 * rep.int
+proc hundreds*(rep: uint = 1):  int = 10000 * rep.int
+proc thousands*(rep: uint = 1): int = 100000 * rep.int
 
 #
 # Math
@@ -471,7 +483,7 @@ proc `/`*[M: Money](x: M, y: M): M =
     result = x
     result.units = x.units div y.units
 
-proc `/=`*[M: Money](x: var M, y: M): M =
+proc `/=`*[M: Money](x: var M, y: M) =
   sameCurrency:
     x.units = x.units div y.units
 
@@ -507,15 +519,15 @@ proc `div`*[M: Money](x: M, y: int): M =
 #
 proc `>`*[M: Money](x, y: M): bool =
   sameCurrency:
-    x.units > y.units
+    return x.units > y.units
 
 proc `<`*[M: Money](x, y: M): bool =
   sameCurrency:
-    x.units < y.units
+    return x.units < y.units
 
 proc `<=`*[M: Money](x, y: M): bool =
   sameCurrency:
-    x.units <= y.units
+    return x.units <= y.units
 
 proc `>=`*[M: Money](x, y: M): bool =
   sameCurrency:
@@ -523,11 +535,12 @@ proc `>=`*[M: Money](x, y: M): bool =
 
 proc `==`*[M: Money](x, y: M): bool =
   sameCurrency:
-    x.units == y.units
+    return x.units == y.units
 
 proc `!=`*[M: Money](x, y: M): bool =
   sameCurrency:
-    x.units != y.units
+    return x.units != y.units
+  result = true
 
 proc `%`*(perc: float, x: Money): Money =
   ## Apply a discount to `x` Money
