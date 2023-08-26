@@ -543,13 +543,13 @@ proc `!=`*[M: Money](x, y: M): bool =
   result = true
 
 proc `%`*(perc: float, x: Money): Money =
-  ## Apply a discount to `x` Money
+  ## Applies `perc` to `x` Money
   var part = (perc / 100) * toInt[int](x.units).get.toFloat
   result = x
-  result.units -= initBigInt(int(part))
+  result.units += initBigInt(int(part))
 
 proc `%`*(perc: float, x: var Money) =
-  ## Apply a `perc` discount to `x` Money
+  ## Applies `perc` cut to `x` Money
   var part = (perc / 100) * toInt[int](x.units).get.toFloat
   x.units -= initBigInt(int(part))
 
