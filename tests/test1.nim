@@ -32,6 +32,16 @@ test "formatting":
   assert $fmt("10000") == "EUR 100.00"
   assert $fmt("100050") == "EUR 1000.50"
 
+test "comparisons":
+  var x = 100.EUR
+  var y = 150.EUR
+  assert x == 100.EUR
+  assert x < y
+  assert x >= 99.EUR
+  assert x != 100.USD
+  assert y > x
+  assert y >= 149.EUR
+
 test "dummy cart example":
   # todo add discount coupons
   type
