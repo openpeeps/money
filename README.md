@@ -19,7 +19,7 @@ Nim library to make working with money safer, easier and fun!
 - Framework agnostic
 - Works with BigInts via `pkg/bigints`
 - Math Operations `+`, `-`, `*`, `/`
-- Math Operations (mutable) `+=` `-=`, `*=`, `*/` => `add`, `sub`, `multi`, `div`
+- Math Operations (mutable) `+=` `-=`, `*=`, `=/` => `add`, `sub`, `multi`, `div`
 - Money Formatting (including intl formatter) 
 - Money Exchange using 3rd party providers
 
