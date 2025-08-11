@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/supranim/money/blob/main/.github/logo.png" width="90px"><br>Create, calculate and format money in 👑 Nim language.
+  <img src="https://github.com/openpeeps/money/blob/main/.github/money.png" width="128px"><br>Create, calculate and format money in 👑 Nim language.
 </p>
 
 <p align="center">
@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="#">API reference</a><br>
-  <img src="https://github.com/supranim/money/workflows/test/badge.svg" alt="Github Actions">  <img src="https://github.com/supranim/money/workflows/docs/badge.svg" alt="Github Actions">
+  <img src="https://github.com/openpeeps/money/workflows/test/badge.svg" alt="Github Actions">  <img src="https://github.com/openpeeps/money/workflows/docs/badge.svg" alt="Github Actions">
 </p>
 
 Nim library to make working with money safer, easier and fun!
@@ -19,7 +19,7 @@ Nim library to make working with money safer, easier and fun!
 - Framework agnostic
 - Works with BigInts via `pkg/bigints`
 - Math Operations `+`, `-`, `*`, `/`
-- Math Operations (mutable) `+=` `-=`, `*=`, `/=` => `add`, `sub`, `multi`, `div`
+- Math Operations (mutable) `+=` `-=`, `*=`, `*/` => `add`, `sub`, `multi`, `div`
 - Money Formatting (including intl formatter) 
 - Money Exchange using 3rd party providers
 
@@ -70,16 +70,16 @@ assert y >= 149.EUR
 ```
 
 ### Cart Example
-[Dummy cart example available in `/tests`](https://github.com/supranim/money/blob/main/tests/test1.nim)
+[Dummy cart example available in `/tests`](https://github.com/openpeeps/money/blob/main/tests/test1.nim)
 
 ### ❤ Contributions & Support
-- 🐛 Found a bug? [Create a new Issue](https://github.com/supranim/money/issues)
-- 👋 Wanna help? [Fork it!](https://github.com/supranim/money/fork)
+- 🐛 Found a bug? [Create a new Issue](https://github.com/openpeeps/money/issues)
+- 👋 Wanna help? [Fork it!](https://github.com/openpeeps/money/fork)
 - 😎 [Get €20 in cloud credits from Hetzner](https://hetzner.cloud/?ref=Hm0mYGM9NxZ4)
 - 🥰 [Donate via PayPal address](https://www.paypal.com/donate/?hosted_button_id=RJK3ZTDWPL55C)
 
 This library is inspired from [moneyphp/money](https://github.com/moneyphp/money).
 
 ### 🎩 License
-Money | MIT license. [Made by Humans from OpenPeeps](https://github.com/openpeeps) for Supranim<br>
-Copyright &copy; 2023 Supranim | OpenPeeps & Contributors &mdash; All rights reserved.
+Money | MIT license. [Made by Humans from OpenPeeps](https://github.com/openpeeps)<br>
+Copyright &copy; 2024 OpenPeeps & Contributors &mdash; All rights reserved.
