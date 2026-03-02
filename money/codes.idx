@@ -1,0 +1,7 @@
+nimTitle	codes	money/codes.html	module money/codes		0
+nim	moneyUnitCoins	money/codes.html#moneyUnitCoins	MoneyUnit.moneyUnitCoins		2
+nim	moneyUnitNotes	money/codes.html#moneyUnitNotes	MoneyUnit.moneyUnitNotes		2
+nim	MoneyUnit	money/codes.html#MoneyUnit	enum MoneyUnit		2
+nim	Currency	money/codes.html#Currency	tuple Currency		9
+nim	Alpha3	money/codes.html#Alpha3	enum Alpha3		13
+nim	Currencies	money/codes.html#Currencies	const Currencies		175

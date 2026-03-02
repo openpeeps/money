@@ -1,0 +1,83 @@
+nimTitle	currencies	money/currencies.html	module money/currencies		0
+nim	moneyDefaultCurrency	money/currencies.html#moneyDefaultCurrency	const moneyDefaultCurrency		26
+nim	moneyDefaultUnit	money/currencies.html#moneyDefaultUnit	const moneyDefaultUnit		30
+nim	Money	money/currencies.html#Money	object Money		38
+nim	CurrencyRates	money/currencies.html#CurrencyRates	type CurrencyRates		50
+nim	MoneyConversionRates	money/currencies.html#MoneyConversionRates	type MoneyConversionRates		57
+nim	MoneyFormattingError	money/currencies.html#MoneyFormattingError	object MoneyFormattingError		64
+nim	MoneyError	money/currencies.html#MoneyError	object MoneyError		67
+nim	amount	money/currencies.html#amount,int,Alpha3	proc amount(units: int; currency: Alpha3): Money		70
+nim	`.`	money/currencies.html#.,A,C	proc `.`[A: int; C: Alpha3](unit: A; currency: C): Money		75
+nim	getCurrency	money/currencies.html#getCurrency,Money	proc getCurrency(amount: Money): Currency		82
+nim	formatMoney	money/currencies.html#formatMoney,string,Alpha3	proc formatMoney(amount: string; currency: Alpha3): Money		85
+nim	fmt	money/currencies.html#fmt,string,Alpha3	proc fmt(x: string; currency: Alpha3 = Alpha3(moneyDefaultCurrency)): Money		117
+nim	`$$`	money/currencies.html#$$,string,Alpha3	proc `$$`(x: string; currency: Alpha3 = Alpha3(moneyDefaultCurrency)): Money		123
+nim	`$$`	money/currencies.html#$$,int	proc `$$`(x: int): Money		129
+nim	newMoney	money/currencies.html#newMoney,string,Alpha3	proc newMoney(x: string = "0"; currency: Alpha3 = Alpha3(moneyDefaultCurrency)): Money		134
+nim	newMoney	money/currencies.html#newMoney,BigInt,Currency	proc newMoney(x: BigInt; currency: Currency = Currencies[moneyDefaultCurrency]): Money		140
+nim	newMoney	money/currencies.html#newMoney,int,Currency	proc newMoney(x: int; currency: Currency = Currencies[moneyDefaultCurrency]): Money		145
+nim	newMoney	money/currencies.html#newMoney,float,Currency	proc newMoney(x: float; currency: Currency = Currencies[moneyDefaultCurrency]): Money		150
+nim	toMoney	money/currencies.html#toMoney,float64,Alpha3	proc toMoney(x: float64; currency: Alpha3 = Alpha3(moneyDefaultCurrency)): Money		155
+nim	coins	money/currencies.html#coins,uint	proc coins(rep: uint = 1): int		169
+nim	hundreds	money/currencies.html#hundreds,uint	proc hundreds(rep: uint = 1): int		170
+nim	thousands	money/currencies.html#thousands,uint	proc thousands(rep: uint = 1): int		171
+nim	isNegative	money/currencies.html#isNegative,Money	proc isNegative(x: Money): bool		201
+nim	isZero	money/currencies.html#isZero,Money	proc isZero(x: Money): bool		205
+nim	isCent	money/currencies.html#isCent,Money	proc isCent(x: Money): bool		209
+nim	isNotes	money/currencies.html#isNotes,Money	proc isNotes(x: Money): bool		213
+nim	`+`	money/currencies.html#+,M,M	proc `+`[M: Money](x, y: M): M		217
+nim	`+=`	money/currencies.html#+=,M,M	proc `+=`[M: Money](x: var M; y: M)		223
+nim	`-`	money/currencies.html#-,M,M	proc `-`[M: Money](x, y: M): M		230
+nim	`-=`	money/currencies.html#-=,M,M	proc `-=`[M: Money](x: var M; y: M)		237
+nim	`*=`	money/currencies.html#*=,M,int	proc `*=`[M: Money](x: var M; y: int)		244
+nim	`*=`	money/currencies.html#*=,M,M	proc `*=`[M: Money](x: var M; y: M)		248
+nim	`*`	money/currencies.html#*,M,float	proc `*`[M: Money](x: M; y: float): M		253
+nim	`*`	money/currencies.html#*,M,BigInt	proc `*`[M: Money](x: M; y: BigInt): M		261
+nim	`*`	money/currencies.html#*,M,M	proc `*`[M: Money](x: M; y: M): M		266
+nim	`/`	money/currencies.html#/,M,M	proc `/`[M: Money](x: M; y: M): M		272
+nim	`/=`	money/currencies.html#/=,M,M	proc `/=`[M: Money](x: var M; y: M)		277
+nim	`/=`	money/currencies.html#/=,M,int	proc `/=`[M: Money](x: var M; y: int)		281
+nim	add	money/currencies.html#add,M,varargs[M]	proc add[M: Money](x: var M; y: varargs[M])		284
+nim	sub	money/currencies.html#sub,M,varargs[M]	proc sub[M: Money](x: var M; y: varargs[M])		288
+nim	multi	money/currencies.html#multi,M,varargs[int]	proc multi[M: Money](x: var M; y: varargs[int])		292
+nim	`div`	money/currencies.html#div,M,varargs[M]	proc `div`[M: Money](x: var M; y: varargs[M])		297
+nim	`div`	money/currencies.html#div,Money,varargs[int]	proc `div`(x: var Money; y: varargs[int])		302
+nim	`div`	money/currencies.html#div,M,int	proc `div`[M: Money](x: M; y: int): M		307
+nim	`>`	money/currencies.html#>,M,M	proc `>`[M: Money](x, y: M): bool		314
+nim	`<`	money/currencies.html#<,M,M	proc `<`[M: Money](x, y: M): bool		318
+nim	`<=`	money/currencies.html#<=,M,M	proc `<=`[M: Money](x, y: M): bool		322
+nim	`>=`	money/currencies.html#>=,M,M	proc `>=`[M: Money](x, y: M): bool		326
+nim	`==`	money/currencies.html#==,M,M	proc `==`[M: Money](x, y: M): bool		330
+nim	`!=`	money/currencies.html#!=,M,M	proc `!=`[M: Money](x, y: M): bool		334
+nim	`%`	money/currencies.html#%,float,Money	proc `%`(perc: float; x: Money): Money		339
+nim	`%`	money/currencies.html#%,float,Money_2	proc `%`(perc: float; x: var Money)		345
+nim	abs	money/currencies.html#abs,M	proc abs[M: Money](x: M): M		350
+nim	max	money/currencies.html#max,varargs[M]	proc max[M: Money](x: varargs[M]): M		356
+nim	min	money/currencies.html#min,varargs[M]	proc min[M: Money](x: varargs[M]): M		365
+nim	avg	money/currencies.html#avg,varargs[M]	proc avg[M: Money](x: varargs[M]): M		374
+nim	contains	money/currencies.html#contains,Money,Alpha3	proc contains(x: Money; currency: Alpha3): bool		384
+nim	isCurrency	money/currencies.html#isCurrency,Money,Alpha3	proc isCurrency(x: Money; currency: Alpha3): bool		388
+nim	inc	money/currencies.html#inc,Money,int	proc inc(x: var Money; y: int = 1)		392
+nim	incCent	money/currencies.html#incCent,Money,int	proc incCent(x: var Money; y: int = 1)		398
+nim	incNotes	money/currencies.html#incNotes,Money,int	proc incNotes(x: var Money; y: int = 1)		402
+nim	add	money/currencies.html#add,MoneyConversionRates,Alpha3,JsonNode	proc add(cvrates: MoneyConversionRates; alpha: Alpha3; rates: JsonNode)		410
+nim	convert	money/currencies.html#convert,Money,Alpha3,MoneyConversionRates	proc convert(x: Money; y: Alpha3; cvrates: MoneyConversionRates): Money		418
+nim	allocate	money/currencies.html#allocate,Money,openArray[SomeNumber]	proc allocate(x: var Money; ratios: openArray[SomeNumber]): seq[Money]		436
+nim	allocate	money/currencies.html#allocate,M,int	proc allocate[M: Money](x: var M; targets: int): seq[M]		465
+nim	coupon	money/currencies.html#coupon,M,M	proc coupon[M: Money](amount: var M; discount: M)		477
+nim	coupon	money/currencies.html#coupon,Money,float	proc coupon(amount: var Money; discount: float)		481
+nim	`$`	money/currencies.html#$,Alpha3	proc `$`(symbol: Alpha3): string		485
+nim	`$`	money/currencies.html#$	proc `$`[M: Money](m: M | ref M): string		489
+nim	toStringMoney	money/currencies.html#toStringMoney,Money	proc toStringMoney(x: Money): string		499
+nim	toSmallestCurrency	money/currencies.html#toSmallestCurrency,Money	proc toSmallestCurrency(x: Money): string		503
+nimgrp	newmoney	money/currencies.html#newMoney-procs-all	proc		134
+nimgrp	add	money/currencies.html#add-procs-all	proc		284
+nimgrp	$$	money/currencies.html#$$-procs-all	proc		123
+nimgrp	$	money/currencies.html#$-procs-all	proc		485
+nimgrp	*	money/currencies.html#*-procs-all	proc		253
+nimgrp	*=	money/currencies.html#*=-procs-all	proc		244
+nimgrp	coupon	money/currencies.html#coupon-procs-all	proc		477
+nimgrp	%	money/currencies.html#%-procs-all	proc		339
+nimgrp	div	money/currencies.html#div-procs-all	proc		297
+nimgrp	allocate	money/currencies.html#allocate-procs-all	proc		436
+nimgrp	/=	money/currencies.html#/=-procs-all	proc		277
