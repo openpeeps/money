@@ -1,7 +1,7 @@
 # Package
 
 version       = "0.1.0"
-author        = "Supranim"
+author        = "George Lemon"
 description   = "Create, calculate and format money in Nim language"
 license       = "MIT"
 srcDir        = "src"
