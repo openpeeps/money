@@ -54,7 +54,7 @@ type
       ## A crit-bit tree mapping target currency alpha3 codes to
       ## their conversion rates relative to the base currency.
 
-  MoneyConversionRates = ref object
+  MoneyConversionRates* = ref object
     ## The `MoneyConversionRates` type is a singleton that
     ## holds conversion rates
     data*: CritBitTree[CurrencyRates]
@@ -406,24 +406,21 @@ proc incNotes*(x: var Money, y: int = 1) =
 #
 # Conversion Rates & Exchange API
 #
-var ConversionRates*: MoneyConversionRates # a singleton of `MoneyConversionRates`
-proc initRates* =
-  ConversionRates = MoneyConversionRates()
 
-proc initCurrencyRates*(alpha: Alpha3, rates: JsonNode) =
-  ## Initialize `MoneyConversionRates` singleton
-  assert ConversionRates != nil
-  if likely(not ConversionRates.data.hasKey($alpha)):
-    ConversionRates.data[$alpha] = CurrencyRates()
+proc add*(cvrates: MoneyConversionRates, alpha: Alpha3, rates: JsonNode) =
+  ## Adds conversion `rates` for `alpha` currency to `exchange`
+  assert cvrates != nil
+  if likely(not cvrates.data.hasKey($alpha)):
+    cvrates.data[$alpha] = CurrencyRates()
   for k, rate in rates:
-    ConversionRates.data[$(alpha)].data[k] = rate.getFloat
+    cvrates.data[$(alpha)].data[k] = rate.getFloat
 
-proc convert*(x: Money, y: Alpha3): Money =
+proc convert*(x: Money, y: Alpha3, cvrates: MoneyConversionRates): Money =
   ## Takes `x` Money and converts to `y` `Alpha3` currency
-  assert ConversionRates != nil
+  assert cvrates != nil
   let symbol = $x.currency[1]
-  if likely(ConversionRates.data.hasKey(symbol)):
-    let currencyRates = ConversionRates.data[symbol]
+  if likely(cvrates.data.hasKey(symbol)):
+    let currencyRates = cvrates.data[symbol]
     if likely(currencyRates.data.hasKey($y)):
       let ratestr = replace($(currencyRates.data[$y]), ".")
       result = fmt(ratestr)
