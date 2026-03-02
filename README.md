@@ -45,7 +45,7 @@ assert $c == "USD 45.00"
 
 ### Arithmetic
 Allows addition, subtraction, multiplication and division of money amounts. The result is always a new `Money` instance, so the original values remain unchanged. Mutable versions of these operations are also available, which modify the original instance instead of creating a new one.
-```
+```nim
 import money
 
 var a = amount(1000, EUR)  # EUR 10.00
@@ -77,8 +77,7 @@ assert $parts[2] == "EUR 0.70"
 ### Exachange
 Money can be exchanged between different currencies using exchange rates. The library provides a way to perform currency exchange using 3rd party providers, allowing for up-to-date exchange rates.
 
-```
-import money
+```nim
 import std/json
 import money
 
