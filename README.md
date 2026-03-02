@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="#">API reference</a><br>
+  <a href="https://openpeeps.github.io/money/">API reference</a><br>
   <img src="https://github.com/openpeeps/money/workflows/test/badge.svg" alt="Github Actions">  <img src="https://github.com/openpeeps/money/workflows/docs/badge.svg" alt="Github Actions">
 </p>
 
@@ -45,7 +45,7 @@ assert $c == "USD 45.00"
 
 ### Arithmetic
 Allows addition, subtraction, multiplication and division of money amounts. The result is always a new `Money` instance, so the original values remain unchanged. Mutable versions of these operations are also available, which modify the original instance instead of creating a new one.
-```
+```nim
 import money
 
 var a = amount(1000, EUR)  # EUR 10.00
@@ -77,8 +77,7 @@ assert $parts[2] == "EUR 0.70"
 ### Exachange
 Money can be exchanged between different currencies using exchange rates. The library provides a way to perform currency exchange using 3rd party providers, allowing for up-to-date exchange rates.
 
-```
-import money
+```nim
 import std/json
 import money
 
@@ -104,4 +103,4 @@ This library is inspired from [moneyphp/money](https://github.com/moneyphp/money
 
 ### 🎩 License
 MIT license. [Made by Humans from OpenPeeps](https://github.com/openpeeps)<br>
-Copyright &copy; 2025 OpenPeeps & Contributors &mdash; All rights reserved.
+Copyright &copy; 2026 OpenPeeps & Contributors &mdash; All rights reserved.
