@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="#">API reference</a><br>
+  <a href="https://openpeeps.github.io/money/">API reference</a><br>
   <img src="https://github.com/openpeeps/money/workflows/test/badge.svg" alt="Github Actions">  <img src="https://github.com/openpeeps/money/workflows/docs/badge.svg" alt="Github Actions">
 </p>
 
@@ -101,4 +101,4 @@ This library is inspired from [moneyphp/money](https://github.com/moneyphp/money
 
 ### 🎩 License
 MIT license. [Made by Humans from OpenPeeps](https://github.com/openpeeps)<br>
-Copyright &copy; 2025 OpenPeeps & Contributors &mdash; All rights reserved.
+Copyright &copy; 2026 OpenPeeps & Contributors &mdash; All rights reserved.
