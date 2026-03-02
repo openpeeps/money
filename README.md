@@ -25,52 +25,72 @@ Nim library to make working with money safer, easier and fun!
 
 ## Examples
 
-Use `defaultCurrency` option to change the default currency at compile-time. Example `-d:defaultCurrency:49` (default) for `EURO` 
+Use `moneyDefaultCurrency` to change default currency at compile time. Default is 49 (EUR).
+
+
+### Constructors and formatting
+All constructors return a `Money` instance, which can be formatted using the `$` operator. The formatting is based on the currency's symbol and the amount, with two decimal places for cents.
 
 ```nim
 import money
 
-assert $(fmt("150")) == "EUR 1.50"
-assert 2500.EUR == fmt"2500" # EUR 25.50
+let a = amount(1234, EUR)
+let b = 1234.EUR
+let c = fmt("4500", USD)
+
+assert $a == "EUR 12.34"
+assert $b == "EUR 12.34"
+assert $c == "USD 45.00"
 ```
 
-### Math
+### Arithmetic
+Allows addition, subtraction, multiplication and division of money amounts. The result is always a new `Money` instance, so the original values remain unchanged. Mutable versions of these operations are also available, which modify the original instance instead of creating a new one.
+```
+import money
+
+var a = amount(1000, EUR)  # EUR 10.00
+let b = amount(250, EUR)   # EUR 2.50
+
+assert $(a + b) == "EUR 12.50"
+a += b
+a -= amount(100, EUR)
+assert $a == "EUR 11.50"
+
+assert $(amount(129, EUR) * 1.83) == "EUR 2.36"
+assert $(amount(1000, EUR) div 4) == "EUR 2.50"
+```
+
+### Allocation
+Money instances are immutable by default, but mutable versions can be created using `var` and the mutable operators. This allows for efficient memory usage when performing multiple operations on the same instance.
 
 ```nim
-var
-  x = amount("150", EUR)
-  y = amount("150", EUR)
+import money
 
-assert x + y == 300.EUR # EUR 3.00
+var x = amount(1000, EUR)
+let parts = allocate(x, [50, 30, 20]) # successive ratios
 
-x += y
-assert x == 300.EUR   # EUR 3.00
-assert x + y > y      # EUR 3.00 > EUR 1.50  
+assert $parts[0] == "EUR 5.00"
+assert $parts[1] == "EUR 1.50"
+assert $parts[2] == "EUR 0.70"
 ```
 
-```nim
-var x = fmt("100")
-assert $(x - fmt(50)) == "EUR 0.50"
+### Exachange
+Money can be exchanged between different currencies using exchange rates. The library provides a way to perform currency exchange using 3rd party providers, allowing for up-to-date exchange rates.
+
 ```
+import money
+import std/json
+import money
 
-### Comparisons
-Comparing `x` to `y` is easy!
+var prevRates = MoneyConversionRates()
+prevRates.add(EUR, parseJson("""{"EUR":1,"USD":1.08,"GBP":0.855}"""))
+prevRates.add(GBP, parseJson("""{"GBP":1,"EUR":1.17,"USD":1.26}"""))
+prevRates.add(USD, parseJson("""{"USD":1,"EUR":0.927,"GBP":0.791}"""))
 
-```nim
-var
-  x = 100.EUR
-  y = 150.EUR
-
-assert x == 100.EUR
-assert x < y
-assert x >= 99.EUR
-assert x != 100.USD
-assert y > x
-assert y >= 149.EUR
+let eur = amount(2000, EUR)
+assert $eur.convert(USD) == "USD 21.60"
+assert $eur.convert(GBP) == "GBP 17.10"
 ```
-
-### Cart Example
-[Dummy cart example available in `/tests`](https://github.com/openpeeps/money/blob/main/tests/test1.nim)
 
 ### ❤ Contributions & Support
 - 🐛 Found a bug? [Create a new Issue](https://github.com/openpeeps/money/issues)
