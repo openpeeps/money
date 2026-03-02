@@ -25,8 +25,8 @@ Nim library to make working with money safer, easier and fun!
 
 ## Examples
 
-Use `moneyDefaultCurrency` to change default currency at compile time. Default is 49 (EUR).
-
+> [!NOTE]
+> Use compile-time flag `-d:moneyDefaultCurrency` to change the default currency used by constructors that don't specify a currency. For example, `amount(1000)` will create a `Money` instance with the default currency set by the flag. If the flag is not set, it defaults to EUR.
 
 ### Constructors and formatting
 All constructors return a `Money` instance, which can be formatted using the `$` operator. The formatting is based on the currency's symbol and the amount, with two decimal places for cents.
@@ -91,6 +91,9 @@ let eur = amount(2000, EUR)
 assert $eur.convert(USD) == "USD 21.60"
 assert $eur.convert(GBP) == "GBP 17.10"
 ```
+
+> [!NOTE]
+> Check the [tests](/tests/test1.nim) for more examples!
 
 ### ❤ Contributions & Support
 - 🐛 Found a bug? [Create a new Issue](https://github.com/openpeeps/money/issues)
