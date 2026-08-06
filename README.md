@@ -19,8 +19,8 @@ Nim library to make working with money safer, easier and fun!
 - Framework agnostic
 - Works with BigInts via `pkg/bigints`
 - Math Operations `+`, `-`, `*`, `/`
-- Math Operations (mutable) `+=` `-=`, `*=`, `*/` => `add`, `sub`, `multi`, `div`
-- Money Formatting (including intl formatter) 
+- Math Operations (mutable) `+=`, `-=`, `*=`, `/=` => `add`, `sub`, `multi`, `div`
+- Money Formatting
 - Money Exchange using 3rd party providers
 
 ## Examples
@@ -74,7 +74,7 @@ assert $parts[1] == "EUR 1.50"
 assert $parts[2] == "EUR 0.70"
 ```
 
-### Exachange
+### Exchange
 Money can be exchanged between different currencies using exchange rates. The library provides a way to perform currency exchange using 3rd party providers, allowing for up-to-date exchange rates.
 
 ```nim
@@ -87,8 +87,8 @@ prevRates.add(GBP, parseJson("""{"GBP":1,"EUR":1.17,"USD":1.26}"""))
 prevRates.add(USD, parseJson("""{"USD":1,"EUR":0.927,"GBP":0.791}"""))
 
 let eur = amount(2000, EUR)
-assert $eur.convert(USD) == "USD 21.60"
-assert $eur.convert(GBP) == "GBP 17.10"
+assert $eur.convert(USD, prevRates) == "USD 21.60"
+assert $eur.convert(GBP, prevRates) == "GBP 17.10"
 ```
 
 > [!NOTE]

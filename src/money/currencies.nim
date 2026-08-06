@@ -10,7 +10,7 @@
 
 {.experimental: "dotOperators".}
 
-import std/[math, algorithm, macros, sequtils, strutils, options,
+import std/[math, algorithm, macros, strutils, options,
         enumutils, tables, typetraits, critbits, json]
 import pkg/bigints
 
@@ -76,8 +76,10 @@ proc `.`*[A: int, C: Alpha3](unit: A, currency: C): Money =
   result = amount(unit, currency)
 
 template matchCurrency(operation): untyped {.dirty.} =
-  if likely(x.currency[1] == y.currency[1]):
-    operation
+  if likely(x.currency[1] != y.currency[1]):
+    raise newException(MoneyError,
+      "Cannot operate on <" & $x.currency[1] & "> and <" & $y.currency[1] & ">")
+  operation
 
 proc getCurrency*(amount: Money): Currency =
   result = amount.currency
@@ -90,23 +92,16 @@ proc formatMoney*(amount: string, currency: Alpha3): Money =
   else:
     result.currency = Currencies[moneyDefaultCurrency]
   var
-    i = 0
-    isInvalid, isNeg: bool
+    isNeg: bool
     amount = amount
+  if amount.len == 0:
+    raise newException(MoneyFormattingError, "Invalid amount: amount is empty")
   if amount[0] == '-':
     isNeg = true
     amount = amount[1..^1]
-  while i < amount.high:
-    case amount[i]
-      of '.': discard
-      of Digits: discard
-      else:
-        isInvalid = true; break
-    inc i
-  if isInvalid:
-    raise newException(MoneyFormattingError,
-      "Invalid amount: " & amount)
-  let pos = amount.high - 1
+  for c in amount:
+    if c notin Digits and c != '.':
+      raise newException(MoneyFormattingError, "Invalid amount: " & amount)
   result.negative = isNeg
   result.units =
     if not isNeg:
@@ -150,20 +145,27 @@ proc newMoney*(x: int, currency: Currency =
 proc newMoney*(x: float, currency: Currency =
     Currencies[moneyDefaultCurrency]): Money {.inline.} =
   ## Creates `Money` from `x` float
-  newMoney(initBigInt(toInt(x.splitDecimal.floatpart * 100)), currency)
+  let expo = int(pow(10.0, float(currency.expo)))
+  newMoney(initBigInt(int(round(x * expo.float))), currency)
 
 proc toMoney*(x: float64, currency: Alpha3 = Alpha3(moneyDefaultCurrency)): Money =
   ## Convert `x` float to `Money`
-  let currency = Currencies[symbolRank(currency)]
-  if count($x, '.') == 0:
-    discard
+  let cur = Currencies[symbolRank(currency)]
+  let str = $x
+  var
+    whole, frac: string
+  if count(str, '.') > 0:
+    let f = split(str, ".")
+    whole = f[0]
+    frac = f[1]
   else:
-    let f = split($x, ".")
-    if currency.expo >= len(f[1]) == false:
-      raise newException(MoneyError,
-        "Invalid decimal for `" & currency.alpha3.symbolName & "`")
-    result = formatMoney(f.join(), currency.alpha3)
-  # echo x.formatFloat(ffDecimal, currency.expo)
+    whole = str
+  if frac.len > cur.expo:
+    raise newException(MoneyError,
+      "Invalid decimal for `" & cur.alpha3.symbolName & "`")
+  while frac.len < cur.expo:
+    frac.add('0')
+  result = formatMoney(whole & frac, currency)
 
 when parseEnum[MoneyUnit](moneyDefaultUnit) == moneyUnitCoins:
   proc coins*(rep: uint = 1): int = 1 * rep.int
@@ -217,29 +219,33 @@ proc isNotes*(x: Money): bool =
 proc `+`*[M: Money](x, y: M): M =
   ## Addition of `x` and `y` Money.
   ## Returns the total as `Money`
-  result = x
-  result.units = x.units + y.units
+  matchCurrency:
+    result = x
+    result.units = x.units + y.units
 
 proc `+=`*[M: Money](x: var M, y: M) =
   ## Addition of mutable `x` and `y` Money.
   ## Returns the total as `Money`
-  x.units += y.units
-  if x.units >= initBigInt(0):
-    x.negative = false
+  matchCurrency:
+    x.units += y.units
+    if x.units >= initBigInt(0):
+      x.negative = false
 
 proc `-`*[M: Money](x, y: M): M =
   ## Subtract of `x` based on `y`. Returns the total as new `Money`
-  result = x
-  if x.units < y.units:
-    result.negative = true
-  result.units = x.units - y.units
+  matchCurrency:
+    result = x
+    if x.units < y.units:
+      result.negative = true
+    result.units = x.units - y.units
 
 proc `-=`*[M: Money](x: var M, y: M) =
   ## Performs subtraction on the two operands and assigns
   ## the result to the mutable `x`.
-  if x.units < y.units:
-    x.negative = true
-  x.units -= y.units
+  matchCurrency:
+    if x.units < y.units:
+      x.negative = true
+    x.units -= y.units
 
 proc `*=`*[M: Money](x: var M, y: int) =
   ## Multiplies `x` with `y`, and assing the result
@@ -334,7 +340,6 @@ proc `==`*[M: Money](x, y: M): bool =
 proc `!=`*[M: Money](x, y: M): bool =
   matchCurrency:
     return x.units != y.units
-  result = true
 
 proc `%`*(perc: float, x: Money): Money =
   ## Applies `perc` to `x` Money
@@ -372,11 +377,14 @@ proc min*[M: Money](x: varargs[M]): M =
       result = x[i]
 
 proc avg*[M: Money](x: varargs[M]): M =
-  ## Returns the average
+  ## Returns the average of the given `Money` objects
+  if x.len == 0:
+    raise newException(MoneyError, "avg requires at least one Money value")
   result = x[0]
+  var total = result.units
   for i in 1..high(x):
-    if x[i].units <= result.units:
-      result = x[i]
+    total += x[i].units
+  result.units = total div initBigInt(x.len)
 
 #
 # Utils
@@ -419,16 +427,18 @@ proc convert*(x: Money, y: Alpha3, cvrates: MoneyConversionRates): Money =
   ## Takes `x` Money and converts to `y` `Alpha3` currency
   assert cvrates != nil
   let symbol = $x.currency[1]
-  if likely(cvrates.data.hasKey(symbol)):
-    let currencyRates = cvrates.data[symbol]
-    if likely(currencyRates.data.hasKey($y)):
-      let ratestr = replace($(currencyRates.data[$y]), ".")
-      result = fmt(ratestr)
-      if ratestr[0] == '0':
-        result.units = (x * result.units).units div initBigInt(10)
-      else:
-        result.units = (x * result.units).units
-      result.currency = Currencies[symbolRank(y)]
+  if not cvrates.data.hasKey(symbol):
+    raise newException(MoneyError, "No conversion rates registered for <" & symbol & ">")
+  if y == noCurrency:
+    raise newException(MoneyError, "Cannot convert to <noCurrency>")
+  let currencyRates = cvrates.data[symbol]
+  if not currencyRates.data.hasKey($y):
+    raise newException(MoneyError, "No conversion rate from <" & symbol & "> to <" & $y & ">")
+  const scale = 1_000_000
+  let factor = int(round(currencyRates.data[$y] * scale.float))
+  result = Money(
+    units: (x.units * initBigInt(factor) + initBigInt(scale div 2)) div initBigInt(scale),
+    currency: Currencies[symbolRank(y)])
 
 #
 # Cart Utilities
@@ -464,6 +474,8 @@ proc allocate*(x: var Money, ratios: openarray[SomeNumber]): seq[Money] =
 
 proc allocate*[M: Money](x: var M, targets: int): seq[M] =
   ## An alias of `div` proc that allocates `x` Money to N targets
+  if targets <= 0:
+    raise newException(MoneyError, "Cannot allocate. Targets must be greater than zero")
   for i in 1..targets:
     add result, x div targets
   for i in 0..(targets - 1):
@@ -473,14 +485,6 @@ proc allocate*[M: Money](x: var M, targets: int): seq[M] =
     dec x.units
     inc result[i].units
     inc i
-
-proc coupon*[M: Money](amount: var M, discount: M) =
-  ## Applies `discount` to `amount`
-  discard
-
-proc coupon*(amount: var Money, discount: float) =
-  ## Applies `discount` to `amount`
-  discard # todo
 
 proc `$`*(symbol: Alpha3): string =
   ## Returns the `symbol` name
