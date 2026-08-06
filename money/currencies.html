@@ -16,13 +16,16 @@
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH4QQQEwksSS9ZWwAAAk1JREFUWMPtll2ITVEUx39nn/O7Y5qR8f05wtCUUr6ZIS++8pEnkZInPImneaCQ5METNdOkeFBKUhMPRIkHKfEuUZSUlGlKPN2TrgfncpvmnntnmlEyq1Z7t89/rf9a6+y99oZxGZf/XeIq61EdtgKXgdXA0xrYAvBjOIF1AI9zvjcC74BSpndrJPkBWDScTF8Aa4E3wDlgHbASaANmVqlcCnwHvgDvgVfAJ+AikAAvgfVZwLnSVZHZaOuKoQi3ZOMi4NkYkpe1p4J7A8BpYAD49hfIy/oqG0+hLomiKP2L5L+1ubn5115S+3OAn4EnwBlgMzCjyt6ZAnQCJ4A7wOs88iRJHvw50HoujuPBoCKwHWiosy8MdfZnAdcHk8dxXFJ3VQbQlCTJvRBCGdRbD4M6uc5glpY3eAihpN5S5w12diSEcCCEcKUO4ljdr15T76ur1FDDLIQQ3qv71EdDOe3Kxj3leRXyk+pxdWnFWod6Wt2bY3de3aSuUHcPBVimHs7mK9WrmeOF6lR1o9qnzskh2ar2qm1qizpfXaPeVGdlmGN5pb09qMxz1Xb1kLqgzn1RyH7JUXW52lr5e/Kqi9qpto7V1atuUzfnARrV7jEib1T76gG2qxdGmXyiekkt1GswPTtek0aBfJp6YySGBfWg2tPQ0FAYgf1stUfdmdcjarbYJEniKIq6gY/Aw+zWHAC+p2labGpqiorFYgGYCEzN7oQdQClN07O1/EfDyGgC0ALMBdYAi4FyK+4H3gLPsxfR1zRNi+NP7nH5J+QntnXe5B5mpfQAAAAASUVORK5CYII=">
 
 <!-- CSS -->
-<link rel="stylesheet" type="text/css" href="../nimdoc.out.css?v=2.2.8">
+<link rel="stylesheet" type="text/css" href="../nimdoc.out.css?v=2.2.10">
 
 <!-- JS -->
-<script type="text/javascript" src="../dochack.js?v=2.2.8"></script>
+<script type="text/javascript" src="../dochack.js?v=2.2.10"></script>
 </head>
 <body>
   <div class="document" id="documentId">
+    <input type="checkbox" id="nav-toggle" hidden>
+    <label for="nav-toggle" id="nav-burger">&#9776;</label>
+    <label for="nav-toggle" id="nav-overlay"></label>
     <div class="container">
       <h1 class="title">money/currencies</h1>
       <div class="row">
@@ -201,11 +204,6 @@
   <li><a class="reference" href="#convert%2CMoney%2CAlpha3%2CMoneyConversionRates" title="convert(x: Money; y: Alpha3; cvrates: MoneyConversionRates): Money">convert(x: Money; y: Alpha3; cvrates: MoneyConversionRates): Money</a></li>
 
 </ul>
-<ul class="simple nested-toc-section">coupon
-  <li><a class="reference" href="#coupon%2CMoney%2Cfloat" title="coupon(amount: var Money; discount: float)">coupon(amount: var Money; discount: float)</a></li>
-<li><a class="reference" href="#coupon%2CM%2CM" title="coupon[M: Money](amount: var M; discount: M)">coupon[M: Money](amount: var M; discount: M)</a></li>
-
-</ul>
 <ul class="simple nested-toc-section">div
   <li><a class="reference" href="#div%2CMoney%2Cvarargs%5Bint%5D" title="`div`(x: var Money; y: varargs[int])">`div`(x: var Money; y: varargs[int])</a></li>
 <li><a class="reference" href="#div%2CM%2Cint" title="`div`[M: Money](x: M; y: int): M">`div`[M: Money](x: M; y: int): M</a></li>
@@ -325,7 +323,7 @@
   <h1><a class="toc-backref" href="#7">Types</a></h1>
   <dl class="item">
     <div id="CurrencyRates">
-  <dt><pre><a href="currencies.html#CurrencyRates"><span class="Identifier">CurrencyRates</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span></pre></dt>
+  <dt><pre><a href="#CurrencyRates"><span class="Identifier">CurrencyRates</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span></pre></dt>
   <dd>
     
     The <tt class="docutils literal"><span class="pre"><span class="Identifier">CurrencyRates</span></span></tt> type holds conversion rates for a specific currency to other currencies.
@@ -333,12 +331,12 @@
   </dd>
 </div>
 <div id="Money">
-  <dt><pre><a href="currencies.html#Money"><span class="Identifier">Money</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#Money"><span class="Identifier">Money</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">currency</span><span class="Operator">*</span><span class="Other">:</span> <a href="codes.html#Currency"><span class="Identifier">Currency</span></a>        <span class="Comment">## The currency of the money, represented as a `Currency` tuple containing</span>
   <span class="Identifier">units</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">BigInt</span>             <span class="Comment">## The amount of money in the smallest unit (e.g., cents for USD, pennies for GBP).</span>
   <span class="Identifier">negative</span><span class="Operator">*</span><span class="Other">,</span> <span class="Identifier">rtl</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">bool</span> <span class="Comment">## `negative` indicates if the amount is negative, while `rtl` can be used</span>
                         <span class="Comment">## for right-to-left currency formatting if needed.</span>
-  <span class="Identifier">rates</span><span class="Operator">*</span><span class="Other">:</span> <a href="currencies.html#CurrencyRates"><span class="Identifier">CurrencyRates</span></a>      <span class="Comment">## A reference to `CurrencyRates` for handling conversion rates, if applicable.</span></pre></dt>
+  <span class="Identifier">rates</span><span class="Operator">*</span><span class="Other">:</span> <a href="#CurrencyRates"><span class="Identifier">CurrencyRates</span></a>      <span class="Comment">## A reference to `CurrencyRates` for handling conversion rates, if applicable.</span></pre></dt>
   <dd>
     
     The <tt class="docutils literal"><span class="pre"><span class="Identifier">Money</span></span></tt> type represents a monetary value with a specific currency.
@@ -346,8 +344,8 @@
   </dd>
 </div>
 <div id="MoneyConversionRates">
-  <dt><pre><a href="currencies.html#MoneyConversionRates"><span class="Identifier">MoneyConversionRates</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span>
-  <span class="Identifier">data</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">CritBitTree</span><span class="Other">[</span><a href="currencies.html#CurrencyRates"><span class="Identifier">CurrencyRates</span></a><span class="Other">]</span> <span class="Comment">## A crit-bit tree mapping base currency alpha3 codes to</span>
+  <dt><pre><a href="#MoneyConversionRates"><span class="Identifier">MoneyConversionRates</span></a> <span class="Other">=</span> <span class="Keyword">ref</span> <span class="Keyword">object</span>
+  <span class="Identifier">data</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">CritBitTree</span><span class="Other">[</span><a href="#CurrencyRates"><span class="Identifier">CurrencyRates</span></a><span class="Other">]</span> <span class="Comment">## A crit-bit tree mapping base currency alpha3 codes to</span>
                                     <span class="Comment">## their corresponding `CurrencyRates` objects.</span></pre></dt>
   <dd>
     
@@ -356,7 +354,7 @@
   </dd>
 </div>
 <div id="MoneyError">
-  <dt><pre><a href="currencies.html#MoneyError"><span class="Identifier">MoneyError</span></a> <span class="Other">=</span> <span class="Keyword">object</span> <span class="Keyword">of</span> <span class="Identifier">CatchableError</span></pre></dt>
+  <dt><pre><a href="#MoneyError"><span class="Identifier">MoneyError</span></a> <span class="Other">=</span> <span class="Keyword">object</span> <span class="Keyword">of</span> <span class="Identifier">CatchableError</span></pre></dt>
   <dd>
     
     A general exception type for errors related to money operations.
@@ -364,7 +362,7 @@
   </dd>
 </div>
 <div id="MoneyFormattingError">
-  <dt><pre><a href="currencies.html#MoneyFormattingError"><span class="Identifier">MoneyFormattingError</span></a> <span class="Other">=</span> <span class="Keyword">object</span> <span class="Keyword">of</span> <span class="Identifier">CatchableError</span></pre></dt>
+  <dt><pre><a href="#MoneyFormattingError"><span class="Identifier">MoneyFormattingError</span></a> <span class="Other">=</span> <span class="Keyword">object</span> <span class="Keyword">of</span> <span class="Identifier">CatchableError</span></pre></dt>
   <dd>
     
     An exception type for errors that occur during money formatting.
@@ -378,7 +376,7 @@
   <h1><a class="toc-backref" href="#10">Consts</a></h1>
   <dl class="item">
     <div id="moneyDefaultCurrency">
-  <dt><pre><a href="currencies.html#moneyDefaultCurrency"><span class="Identifier">moneyDefaultCurrency</span></a> {.<span class="Identifier">intdefine</span>.}<span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">49</span></pre></dt>
+  <dt><pre><a href="#moneyDefaultCurrency"><span class="Identifier">moneyDefaultCurrency</span></a> {.<span class="Identifier">intdefine</span>.}<span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">49</span></pre></dt>
   <dd>
     
     
@@ -386,7 +384,7 @@
   </dd>
 </div>
 <div id="moneyDefaultUnit">
-  <dt><pre><a href="currencies.html#moneyDefaultUnit"><span class="Identifier">moneyDefaultUnit</span></a> {.<span class="Identifier">strdefine</span>.}<span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;coins&quot;</span></pre></dt>
+  <dt><pre><a href="#moneyDefaultUnit"><span class="Identifier">moneyDefaultUnit</span></a> {.<span class="Identifier">strdefine</span>.}<span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;coins&quot;</span></pre></dt>
   <dd>
     
     
@@ -401,7 +399,7 @@
   <dl class="item">
     <div id="!=-procs-all">
   <div id="!=,M,M">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%21%3D%2CM%2CM"><span class="Identifier">`!=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%21%3D%2CM%2CM"><span class="Identifier">`!=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span></pre></dt>
   <dd>
     
     
@@ -420,7 +418,7 @@
   </dd>
 </div>
 <div id="$">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%24"><span class="Identifier">`$`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">M</span> <span class="Operator">|</span> <span class="Keyword">ref</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%24"><span class="Identifier">`$`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">M</span> <span class="Operator">|</span> <span class="Keyword">ref</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span></pre></dt>
   <dd>
     
     Return string representation of <tt class="docutils literal"><span class="pre"><span class="Identifier">Money</span></span></tt>
@@ -431,7 +429,7 @@
 </div>
 <div id="$$-procs-all">
   <div id="$$,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%24%24%2Cint"><span class="Identifier">`$$`</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%24%24%2Cint"><span class="Identifier">`$$`</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     Creates <tt class="docutils literal"><span class="pre"><span class="Identifier">Money</span></span></tt> from <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> int
@@ -439,7 +437,7 @@
   </dd>
 </div>
 <div id="$$,string,Alpha3">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%24%24%2Cstring%2CAlpha3"><span class="Identifier">`$$`</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a> <span class="Other">=</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">(</span><span class="Identifier">moneyDefaultCurrency</span><span class="Other">)</span><span class="Other">)</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#%24%24%2Cstring%2CAlpha3"><span class="Identifier">`$$`</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a> <span class="Other">=</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">(</span><span class="Identifier">moneyDefaultCurrency</span><span class="Other">)</span><span class="Other">)</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a> {.
     <span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">MoneyFormattingError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -451,7 +449,7 @@
 </div>
 <div id="%-procs-all">
   <div id="%,float,Money">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%25%2Cfloat%2CMoney"><span class="Identifier">`%`</span></a><span class="Other">(</span><span class="Identifier">perc</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">x</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">)</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%25%2Cfloat%2CMoney"><span class="Identifier">`%`</span></a><span class="Other">(</span><span class="Identifier">perc</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">x</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">)</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     Applies <tt class="docutils literal"><span class="pre"><span class="Identifier">perc</span></span></tt> to <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> Money
@@ -459,7 +457,7 @@
   </dd>
 </div>
 <div id="%,float,Money_2">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%25%2Cfloat%2CMoney_2"><span class="Identifier">`%`</span></a><span class="Other">(</span><span class="Identifier">perc</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%25%2Cfloat%2CMoney_2"><span class="Identifier">`%`</span></a><span class="Other">(</span><span class="Identifier">perc</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     Applies <tt class="docutils literal"><span class="pre"><span class="Identifier">perc</span></span></tt> cut to <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> Money
@@ -470,7 +468,7 @@
 </div>
 <div id="*-procs-all">
   <div id="*,M,BigInt">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%2A%2CM%2CBigInt"><span class="Identifier">`*`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">BigInt</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%2A%2CM%2CBigInt"><span class="Identifier">`*`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">BigInt</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
   <dd>
     
     Multiplies <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> by <tt class="docutils literal"><span class="pre"><span class="Identifier">y</span></span></tt>
@@ -478,7 +476,7 @@
   </dd>
 </div>
 <div id="*,M,float">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%2A%2CM%2Cfloat"><span class="Identifier">`*`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%2A%2CM%2Cfloat"><span class="Identifier">`*`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
   <dd>
     
     Multiplies <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> by <tt class="docutils literal"><span class="pre"><span class="Identifier">y</span></span></tt> Multiplies <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> by <tt class="docutils literal"><span class="pre"><span class="Identifier">y</span></span></tt> with fixed-point precision
@@ -486,7 +484,7 @@
   </dd>
 </div>
 <div id="*,M,M">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%2A%2CM%2CM"><span class="Identifier">`*`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%2A%2CM%2CM"><span class="Identifier">`*`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
   <dd>
     
     
@@ -497,7 +495,7 @@
 </div>
 <div id="*=-procs-all">
   <div id="*=,M,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%2A%3D%2CM%2Cint"><span class="Identifier">`*=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%2A%3D%2CM%2Cint"><span class="Identifier">`*=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span></pre></dt>
   <dd>
     
     Multiplies <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> with <tt class="docutils literal"><span class="pre"><span class="Identifier">y</span></span></tt>, and assing the result
@@ -505,7 +503,7 @@
   </dd>
 </div>
 <div id="*=,M,M">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%2A%3D%2CM%2CM"><span class="Identifier">`*=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%2A%3D%2CM%2CM"><span class="Identifier">`*=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span></pre></dt>
   <dd>
     
     Multiplies <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> with <tt class="docutils literal"><span class="pre"><span class="Identifier">y</span></span></tt> and assing the result
@@ -516,7 +514,7 @@
 </div>
 <div id="+-procs-all">
   <div id="+,M,M">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%2B%2CM%2CM"><span class="Identifier">`+`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%2B%2CM%2CM"><span class="Identifier">`+`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
   <dd>
     
     Addition of <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> and <tt class="docutils literal"><span class="pre"><span class="Identifier">y</span></span></tt> Money. Returns the total as <tt class="docutils literal"><span class="pre"><span class="Identifier">Money</span></span></tt>
@@ -527,7 +525,7 @@
 </div>
 <div id="+=-procs-all">
   <div id="+=,M,M">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%2B%3D%2CM%2CM"><span class="Identifier">`+=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%2B%3D%2CM%2CM"><span class="Identifier">`+=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span></pre></dt>
   <dd>
     
     Addition of mutable <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> and <tt class="docutils literal"><span class="pre"><span class="Identifier">y</span></span></tt> Money. Returns the total as <tt class="docutils literal"><span class="pre"><span class="Identifier">Money</span></span></tt>
@@ -538,7 +536,7 @@
 </div>
 <div id="--procs-all">
   <div id="-,M,M">
-  <dt><pre><span class="Keyword">proc</span> <a href="#-%2CM%2CM"><span class="Identifier">`-`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#-%2CM%2CM"><span class="Identifier">`-`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
   <dd>
     
     Subtract of <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> based on <tt class="docutils literal"><span class="pre"><span class="Identifier">y</span></span></tt>. Returns the total as new <tt class="docutils literal"><span class="pre"><span class="Identifier">Money</span></span></tt>
@@ -549,7 +547,7 @@
 </div>
 <div id="-=-procs-all">
   <div id="-=,M,M">
-  <dt><pre><span class="Keyword">proc</span> <a href="#-%3D%2CM%2CM"><span class="Identifier">`-=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#-%3D%2CM%2CM"><span class="Identifier">`-=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span></pre></dt>
   <dd>
     
     Performs subtraction on the two operands and assigns the result to the mutable <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt>.
@@ -560,7 +558,7 @@
 </div>
 <div id=".-procs-all">
   <div id=".,A,C">
-  <dt><pre><span class="Keyword">proc</span> <a href="#.%2CA%2CC"><span class="Identifier">`.`</span></a><span class="Other">[</span><span class="Identifier">A</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">C</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">unit</span><span class="Other">:</span> <span class="Identifier">A</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <span class="Identifier">C</span><span class="Other">)</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#.%2CA%2CC"><span class="Identifier">`.`</span></a><span class="Other">[</span><span class="Identifier">A</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">C</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">unit</span><span class="Other">:</span> <span class="Identifier">A</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <span class="Identifier">C</span><span class="Other">)</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a></pre></dt>
   <dd>
     
     
@@ -571,7 +569,7 @@
 </div>
 <div id="/-procs-all">
   <div id="/,M,M">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%2F%2CM%2CM"><span class="Identifier">`/`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%2F%2CM%2CM"><span class="Identifier">`/`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
   <dd>
     
     
@@ -582,7 +580,7 @@
 </div>
 <div id="/=-procs-all">
   <div id="/=,M,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%2F%3D%2CM%2Cint"><span class="Identifier">`/=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%2F%3D%2CM%2Cint"><span class="Identifier">`/=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -590,7 +588,7 @@
   </dd>
 </div>
 <div id="/=,M,M">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%2F%3D%2CM%2CM"><span class="Identifier">`/=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%2F%3D%2CM%2CM"><span class="Identifier">`/=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -601,7 +599,7 @@
 </div>
 <div id="&lt;-procs-all">
   <div id="<,M,M">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%3C%2CM%2CM"><span class="Identifier">`&lt;`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%3C%2CM%2CM"><span class="Identifier">`&lt;`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span></pre></dt>
   <dd>
     
     
@@ -612,7 +610,7 @@
 </div>
 <div id="&lt;=-procs-all">
   <div id="<=,M,M">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%3C%3D%2CM%2CM"><span class="Identifier">`&lt;=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%3C%3D%2CM%2CM"><span class="Identifier">`&lt;=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span></pre></dt>
   <dd>
     
     
@@ -623,7 +621,7 @@
 </div>
 <div id="==-procs-all">
   <div id="==,M,M">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%3D%3D%2CM%2CM"><span class="Identifier">`==`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%3D%3D%2CM%2CM"><span class="Identifier">`==`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span></pre></dt>
   <dd>
     
     
@@ -634,7 +632,7 @@
 </div>
 <div id="&gt;-procs-all">
   <div id=">,M,M">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%3E%2CM%2CM"><span class="Identifier">`&gt;`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%3E%2CM%2CM"><span class="Identifier">`&gt;`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span></pre></dt>
   <dd>
     
     
@@ -645,7 +643,7 @@
 </div>
 <div id="&gt;=-procs-all">
   <div id=">=,M,M">
-  <dt><pre><span class="Keyword">proc</span> <a href="#%3E%3D%2CM%2CM"><span class="Identifier">`&gt;=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#%3E%3D%2CM%2CM"><span class="Identifier">`&gt;=`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span></pre></dt>
   <dd>
     
     
@@ -656,7 +654,7 @@
 </div>
 <div id="abs-procs-all">
   <div id="abs,M">
-  <dt><pre><span class="Keyword">proc</span> <a href="#abs%2CM"><span class="Identifier">abs</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#abs%2CM"><span class="Identifier">abs</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
   <dd>
     
     Returns the absolute value of <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> Money
@@ -667,7 +665,7 @@
 </div>
 <div id="add-procs-all">
   <div id="add,MoneyConversionRates,Alpha3,JsonNode">
-  <dt><pre><span class="Keyword">proc</span> <a href="#add%2CMoneyConversionRates%2CAlpha3%2CJsonNode"><span class="Identifier">add</span></a><span class="Other">(</span><span class="Identifier">cvrates</span><span class="Other">:</span> <a href="currencies.html#MoneyConversionRates"><span class="Identifier">MoneyConversionRates</span></a><span class="Other">;</span> <span class="Identifier">alpha</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">;</span> <span class="Identifier">rates</span><span class="Other">:</span> <span class="Identifier">JsonNode</span><span class="Other">)</span> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#add%2CMoneyConversionRates%2CAlpha3%2CJsonNode"><span class="Identifier">add</span></a><span class="Other">(</span><span class="Identifier">cvrates</span><span class="Other">:</span> <a href="#MoneyConversionRates"><span class="Identifier">MoneyConversionRates</span></a><span class="Other">;</span> <span class="Identifier">alpha</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">;</span> <span class="Identifier">rates</span><span class="Other">:</span> <span class="Identifier">JsonNode</span><span class="Other">)</span> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">KeyError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -676,7 +674,7 @@
   </dd>
 </div>
 <div id="add,M,varargs[M]">
-  <dt><pre><span class="Keyword">proc</span> <a href="#add%2CM%2Cvarargs%5BM%5D"><span class="Identifier">add</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">M</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#add%2CM%2Cvarargs%5BM%5D"><span class="Identifier">add</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">M</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -687,7 +685,7 @@
 </div>
 <div id="allocate-procs-all">
   <div id="allocate,Money,openArray[SomeNumber]">
-  <dt><pre><span class="Keyword">proc</span> <a href="#allocate%2CMoney%2CopenArray%5BSomeNumber%5D"><span class="Identifier">allocate</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">;</span> <span class="Identifier">ratios</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#allocate%2CMoney%2CopenArray%5BSomeNumber%5D"><span class="Identifier">allocate</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">;</span> <span class="Identifier">ratios</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span></pre></dt>
   <dd>
     
     Applies successive ratios to <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> Money (each ratio uses remaining balance)
@@ -695,7 +693,7 @@
   </dd>
 </div>
 <div id="allocate,M,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#allocate%2CM%2Cint"><span class="Identifier">allocate</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">targets</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">M</span><span class="Other">]</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#allocate%2CM%2Cint"><span class="Identifier">allocate</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">targets</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">M</span><span class="Other">]</span></pre></dt>
   <dd>
     
     An alias of <tt class="docutils literal"><span class="pre"><span class="Keyword">div</span></span></tt> proc that allocates <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> Money to N targets
@@ -706,7 +704,7 @@
 </div>
 <div id="amount-procs-all">
   <div id="amount,int,Alpha3">
-  <dt><pre><span class="Keyword">proc</span> <a href="#amount%2Cint%2CAlpha3"><span class="Identifier">amount</span></a><span class="Other">(</span><span class="Identifier">units</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">)</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#amount%2Cint%2CAlpha3"><span class="Identifier">amount</span></a><span class="Other">(</span><span class="Identifier">units</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">)</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -718,10 +716,10 @@
 </div>
 <div id="avg-procs-all">
   <div id="avg,varargs[M]">
-  <dt><pre><span class="Keyword">proc</span> <a href="#avg%2Cvarargs%5BM%5D"><span class="Identifier">avg</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">M</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#avg%2Cvarargs%5BM%5D"><span class="Identifier">avg</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">M</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
   <dd>
     
-    Returns the average
+    Returns the average of the given <tt class="docutils literal"><span class="pre"><span class="Identifier">Money</span></span></tt> objects
     
   </dd>
 </div>
@@ -740,7 +738,7 @@
 </div>
 <div id="contains-procs-all">
   <div id="contains,Money,Alpha3">
-  <dt><pre><span class="Keyword">proc</span> <a href="#contains%2CMoney%2CAlpha3"><span class="Identifier">contains</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#contains%2CMoney%2CAlpha3"><span class="Identifier">contains</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -752,9 +750,8 @@
 </div>
 <div id="convert-procs-all">
   <div id="convert,Money,Alpha3,MoneyConversionRates">
-  <dt><pre><span class="Keyword">proc</span> <a href="#convert%2CMoney%2CAlpha3%2CMoneyConversionRates"><span class="Identifier">convert</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">;</span> <span class="Identifier">cvrates</span><span class="Other">:</span> <a href="currencies.html#MoneyConversionRates"><span class="Identifier">MoneyConversionRates</span></a><span class="Other">)</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a> {.
-    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">KeyError</span><span class="Other">,</span> <span class="Identifier">MoneyFormattingError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">,</span> <span class="Identifier">Exception</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#convert%2CMoney%2CAlpha3%2CMoneyConversionRates"><span class="Identifier">convert</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">;</span> <span class="Identifier">cvrates</span><span class="Other">:</span> <a href="#MoneyConversionRates"><span class="Identifier">MoneyConversionRates</span></a><span class="Other">)</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a> {.
+    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">MoneyError</span><span class="Other">,</span> <span class="Identifier">KeyError</span><span class="Other">,</span> <span class="Identifier">Exception</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     Takes <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> Money and converts to <tt class="docutils literal"><span class="pre"><span class="Identifier">y</span></span></tt> <tt class="docutils literal"><span class="pre"><span class="Identifier">Alpha3</span></span></tt> currency
@@ -763,29 +760,9 @@
 </div>
 
 </div>
-<div id="coupon-procs-all">
-  <div id="coupon,Money,float">
-  <dt><pre><span class="Keyword">proc</span> <a href="#coupon%2CMoney%2Cfloat"><span class="Identifier">coupon</span></a><span class="Other">(</span><span class="Identifier">amount</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">;</span> <span class="Identifier">discount</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
-  <dd>
-    
-    Applies <tt class="docutils literal"><span class="pre"><span class="Identifier">discount</span></span></tt> to <tt class="docutils literal"><span class="pre"><span class="Identifier">amount</span></span></tt>
-    
-  </dd>
-</div>
-<div id="coupon,M,M">
-  <dt><pre><span class="Keyword">proc</span> <a href="#coupon%2CM%2CM"><span class="Identifier">coupon</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">amount</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">discount</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">)</span></pre></dt>
-  <dd>
-    
-    Applies <tt class="docutils literal"><span class="pre"><span class="Identifier">discount</span></span></tt> to <tt class="docutils literal"><span class="pre"><span class="Identifier">amount</span></span></tt>
-    
-  </dd>
-</div>
-
-</div>
 <div id="div-procs-all">
   <div id="div,Money,varargs[int]">
-  <dt><pre><span class="Keyword">proc</span> <a href="#div%2CMoney%2Cvarargs%5Bint%5D"><span class="Identifier">`div`</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">Exception</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#div%2CMoney%2Cvarargs%5Bint%5D"><span class="Identifier">`div`</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">Exception</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">RootEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -794,7 +771,7 @@
   </dd>
 </div>
 <div id="div,M,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#div%2CM%2Cint"><span class="Identifier">`div`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#div%2CM%2Cint"><span class="Identifier">`div`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
   <dd>
     
     
@@ -802,7 +779,7 @@
   </dd>
 </div>
 <div id="div,M,varargs[M]">
-  <dt><pre><span class="Keyword">proc</span> <a href="#div%2CM%2Cvarargs%5BM%5D"><span class="Identifier">`div`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">M</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#div%2CM%2Cvarargs%5BM%5D"><span class="Identifier">`div`</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">M</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     A mutable proc to divide <tt class="docutils literal"><span class="pre"><span class="Identifier">Money</span></span></tt> by <tt class="docutils literal"><span class="pre"><span class="Identifier">y</span></span></tt> Money
@@ -813,7 +790,7 @@
 </div>
 <div id="fmt-procs-all">
   <div id="fmt,string,Alpha3">
-  <dt><pre><span class="Keyword">proc</span> <a href="#fmt%2Cstring%2CAlpha3"><span class="Identifier">fmt</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a> <span class="Other">=</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">(</span><span class="Identifier">moneyDefaultCurrency</span><span class="Other">)</span><span class="Other">)</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#fmt%2Cstring%2CAlpha3"><span class="Identifier">fmt</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a> <span class="Other">=</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">(</span><span class="Identifier">moneyDefaultCurrency</span><span class="Other">)</span><span class="Other">)</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a> {.
     <span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">MoneyFormattingError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -827,7 +804,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="formatMoney-procs-all">
   <div id="formatMoney,string,Alpha3">
-  <dt><pre><span class="Keyword">proc</span> <a href="#formatMoney%2Cstring%2CAlpha3"><span class="Identifier">formatMoney</span></a><span class="Other">(</span><span class="Identifier">amount</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">)</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#formatMoney%2Cstring%2CAlpha3"><span class="Identifier">formatMoney</span></a><span class="Other">(</span><span class="Identifier">amount</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">)</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">MoneyFormattingError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -839,7 +816,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="getCurrency-procs-all">
   <div id="getCurrency,Money">
-  <dt><pre><span class="Keyword">proc</span> <a href="#getCurrency%2CMoney"><span class="Identifier">getCurrency</span></a><span class="Other">(</span><span class="Identifier">amount</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">)</span><span class="Other">:</span> <a href="codes.html#Currency"><span class="Identifier">Currency</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#getCurrency%2CMoney"><span class="Identifier">getCurrency</span></a><span class="Other">(</span><span class="Identifier">amount</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">)</span><span class="Other">:</span> <a href="codes.html#Currency"><span class="Identifier">Currency</span></a> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -861,7 +838,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="inc-procs-all">
   <div id="inc,Money,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#inc%2CMoney%2Cint"><span class="Identifier">inc</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#inc%2CMoney%2Cint"><span class="Identifier">inc</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -872,7 +849,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="incCent-procs-all">
   <div id="incCent,Money,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#incCent%2CMoney%2Cint"><span class="Identifier">incCent</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#incCent%2CMoney%2Cint"><span class="Identifier">incCent</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     Increment <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> Money by <tt class="docutils literal"><span class="pre"><span class="Identifier">y</span></span></tt> cents
@@ -883,7 +860,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="incNotes-procs-all">
   <div id="incNotes,Money,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#incNotes%2CMoney%2Cint"><span class="Identifier">incNotes</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#incNotes%2CMoney%2Cint"><span class="Identifier">incNotes</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">1</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     Increment <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> Money by <tt class="docutils literal"><span class="pre"><span class="Identifier">y</span></span></tt> banknotes
@@ -894,7 +871,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="isCent-procs-all">
   <div id="isCent,Money">
-  <dt><pre><span class="Keyword">proc</span> <a href="#isCent%2CMoney"><span class="Identifier">isCent</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#isCent%2CMoney"><span class="Identifier">isCent</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     Checks if <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> Money in cents
@@ -905,7 +882,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="isCurrency-procs-all">
   <div id="isCurrency,Money,Alpha3">
-  <dt><pre><span class="Keyword">proc</span> <a href="#isCurrency%2CMoney%2CAlpha3"><span class="Identifier">isCurrency</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#isCurrency%2CMoney%2CAlpha3"><span class="Identifier">isCurrency</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -917,7 +894,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="isNegative-procs-all">
   <div id="isNegative,Money">
-  <dt><pre><span class="Keyword">proc</span> <a href="#isNegative%2CMoney"><span class="Identifier">isNegative</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#isNegative%2CMoney"><span class="Identifier">isNegative</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     Checks if <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> Money is negative
@@ -928,7 +905,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="isNotes-procs-all">
   <div id="isNotes,Money">
-  <dt><pre><span class="Keyword">proc</span> <a href="#isNotes%2CMoney"><span class="Identifier">isNotes</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#isNotes%2CMoney"><span class="Identifier">isNotes</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     Checks if <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> in banknotes
@@ -939,7 +916,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="isZero-procs-all">
   <div id="isZero,Money">
-  <dt><pre><span class="Keyword">proc</span> <a href="#isZero%2CMoney"><span class="Identifier">isZero</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#isZero%2CMoney"><span class="Identifier">isZero</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     Checks if <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> Money is <tt class="docutils literal"><span class="pre"><span class="FloatNumber">0.00</span></span></tt>
@@ -950,7 +927,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="max-procs-all">
   <div id="max,varargs[M]">
-  <dt><pre><span class="Keyword">proc</span> <a href="#max%2Cvarargs%5BM%5D"><span class="Identifier">max</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">M</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#max%2Cvarargs%5BM%5D"><span class="Identifier">max</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">M</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
   <dd>
     
     Returns the largest of the given <tt class="docutils literal"><span class="pre"><span class="Identifier">Money</span></span></tt> objects
@@ -961,7 +938,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="min-procs-all">
   <div id="min,varargs[M]">
-  <dt><pre><span class="Keyword">proc</span> <a href="#min%2Cvarargs%5BM%5D"><span class="Identifier">min</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">M</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#min%2Cvarargs%5BM%5D"><span class="Identifier">min</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">M</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">M</span></pre></dt>
   <dd>
     
     Returns the smallest of the given <tt class="docutils literal"><span class="pre"><span class="Identifier">Money</span></span></tt> objects
@@ -972,7 +949,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="multi-procs-all">
   <div id="multi,M,varargs[int]">
-  <dt><pre><span class="Keyword">proc</span> <a href="#multi%2CM%2Cvarargs%5Bint%5D"><span class="Identifier">multi</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#multi%2CM%2Cvarargs%5Bint%5D"><span class="Identifier">multi</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     A mutable proc to multiply <tt class="docutils literal"><span class="pre"><span class="Identifier">Money</span></span></tt> with <tt class="docutils literal"><span class="pre"><span class="Identifier">y</span></span></tt> int
@@ -983,7 +960,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="newMoney-procs-all">
   <div id="newMoney,BigInt,Currency">
-  <dt><pre><span class="Keyword">proc</span> <a href="#newMoney%2CBigInt%2CCurrency"><span class="Identifier">newMoney</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">BigInt</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Currency"><span class="Identifier">Currency</span></a> <span class="Other">=</span> <a href="codes.html#Currencies"><span class="Identifier">Currencies</span></a><span class="Other">[</span><a href="currencies.html#moneyDefaultCurrency"><span class="Identifier">moneyDefaultCurrency</span></a><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#newMoney%2CBigInt%2CCurrency"><span class="Identifier">newMoney</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">BigInt</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Currency"><span class="Identifier">Currency</span></a> <span class="Other">=</span> <a href="codes.html#Currencies"><span class="Identifier">Currencies</span></a><span class="Other">[</span><a href="#moneyDefaultCurrency"><span class="Identifier">moneyDefaultCurrency</span></a><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -992,7 +969,7 @@ set as `moneyDefaultCurrency `</pre>
   </dd>
 </div>
 <div id="newMoney,float,Currency">
-  <dt><pre><span class="Keyword">proc</span> <a href="#newMoney%2Cfloat%2CCurrency"><span class="Identifier">newMoney</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Currency"><span class="Identifier">Currency</span></a> <span class="Other">=</span> <a href="codes.html#Currencies"><span class="Identifier">Currencies</span></a><span class="Other">[</span><a href="currencies.html#moneyDefaultCurrency"><span class="Identifier">moneyDefaultCurrency</span></a><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#newMoney%2Cfloat%2CCurrency"><span class="Identifier">newMoney</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Currency"><span class="Identifier">Currency</span></a> <span class="Other">=</span> <a href="codes.html#Currencies"><span class="Identifier">Currencies</span></a><span class="Other">[</span><a href="#moneyDefaultCurrency"><span class="Identifier">moneyDefaultCurrency</span></a><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a> {.
     <span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -1001,7 +978,7 @@ set as `moneyDefaultCurrency `</pre>
   </dd>
 </div>
 <div id="newMoney,int,Currency">
-  <dt><pre><span class="Keyword">proc</span> <a href="#newMoney%2Cint%2CCurrency"><span class="Identifier">newMoney</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Currency"><span class="Identifier">Currency</span></a> <span class="Other">=</span> <a href="codes.html#Currencies"><span class="Identifier">Currencies</span></a><span class="Other">[</span><a href="currencies.html#moneyDefaultCurrency"><span class="Identifier">moneyDefaultCurrency</span></a><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#newMoney%2Cint%2CCurrency"><span class="Identifier">newMoney</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Currency"><span class="Identifier">Currency</span></a> <span class="Other">=</span> <a href="codes.html#Currencies"><span class="Identifier">Currencies</span></a><span class="Other">[</span><a href="#moneyDefaultCurrency"><span class="Identifier">moneyDefaultCurrency</span></a><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a> {.
     <span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -1010,7 +987,7 @@ set as `moneyDefaultCurrency `</pre>
   </dd>
 </div>
 <div id="newMoney,string,Alpha3">
-  <dt><pre><span class="Keyword">proc</span> <a href="#newMoney%2Cstring%2CAlpha3"><span class="Identifier">newMoney</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;0&quot;</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a> <span class="Other">=</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">(</span><span class="Identifier">moneyDefaultCurrency</span><span class="Other">)</span><span class="Other">)</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#newMoney%2Cstring%2CAlpha3"><span class="Identifier">newMoney</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;0&quot;</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a> <span class="Other">=</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">(</span><span class="Identifier">moneyDefaultCurrency</span><span class="Other">)</span><span class="Other">)</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">MoneyFormattingError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -1022,7 +999,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="sub-procs-all">
   <div id="sub,M,varargs[M]">
-  <dt><pre><span class="Keyword">proc</span> <a href="#sub%2CM%2Cvarargs%5BM%5D"><span class="Identifier">sub</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">M</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#sub%2CM%2Cvarargs%5BM%5D"><span class="Identifier">sub</span></a><span class="Other">[</span><span class="Identifier">M</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">M</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">M</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
   <dd>
     
     
@@ -1044,7 +1021,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="toMoney-procs-all">
   <div id="toMoney,float64,Alpha3">
-  <dt><pre><span class="Keyword">proc</span> <a href="#toMoney%2Cfloat64%2CAlpha3"><span class="Identifier">toMoney</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">float64</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a> <span class="Other">=</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">(</span><span class="Identifier">moneyDefaultCurrency</span><span class="Other">)</span><span class="Other">)</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#toMoney%2Cfloat64%2CAlpha3"><span class="Identifier">toMoney</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">float64</span><span class="Other">;</span> <span class="Identifier">currency</span><span class="Other">:</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a> <span class="Other">=</span> <a href="codes.html#Alpha3"><span class="Identifier">Alpha3</span></a><span class="Other">(</span><span class="Identifier">moneyDefaultCurrency</span><span class="Other">)</span><span class="Other">)</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">MoneyError</span><span class="Other">,</span> <span class="Identifier">MoneyFormattingError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
@@ -1057,7 +1034,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="toSmallestCurrency-procs-all">
   <div id="toSmallestCurrency,Money">
-  <dt><pre><span class="Keyword">proc</span> <a href="#toSmallestCurrency%2CMoney"><span class="Identifier">toSmallestCurrency</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#toSmallestCurrency%2CMoney"><span class="Identifier">toSmallestCurrency</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     Converts <tt class="docutils literal"><span class="pre"><span class="Identifier">x</span></span></tt> Money to the smallest currency unit (e.g., cents) For example, EUR 5.00 would be converted to &quot;500&quot;.
@@ -1068,7 +1045,7 @@ set as `moneyDefaultCurrency `</pre>
 </div>
 <div id="toStringMoney-procs-all">
   <div id="toStringMoney,Money">
-  <dt><pre><span class="Keyword">proc</span> <a href="#toStringMoney%2CMoney"><span class="Identifier">toStringMoney</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="currencies.html#Money"><span class="Identifier">Money</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#toStringMoney%2CMoney"><span class="Identifier">toStringMoney</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <a href="#Money"><span class="Identifier">Money</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     An alias of <tt class="docutils literal"><span class="pre"><span class="Operator">$</span></span></tt> proc for <tt class="docutils literal"><span class="pre"><span class="Identifier">Money</span></span></tt>
@@ -1093,7 +1070,7 @@ set as `moneyDefaultCurrency `</pre>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2026-03-02 02:46:14 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-08-06 16:03:08 UTC</small>
       </div>
     </div>
   </div>
